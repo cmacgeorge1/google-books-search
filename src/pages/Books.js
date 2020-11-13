@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import DeleteBtn from "../components/DeleteBtn";
+import SaveBtn from "../components/SaveBtn";
 import Jumbotron from "../components/Jumbotron";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
-import { Input, TextArea, FormBtn } from "../components/Form";
+import { Input, FormBtn } from "../components/Form";
 
 function Books() {
   // Setting our component's initial state
@@ -27,9 +27,10 @@ function Books() {
   };
 
   // Deletes a book from the database with a given id, then reloads books from the db
-  function deleteBook(id) {
-    axios.delete("")
-      .then(res => loadBooks())
+  function saveBook(book) {
+    console.log(book)
+    axios.post("/api/saveBook")
+      .then(res => console.log(res))
       .catch(err => console.log(err));
   }
 
@@ -90,14 +91,13 @@ function Books() {
             </Jumbotron>
             {books.length ? (
               <List>
-                {books.map(book => (
-                  <ListItem key={book._id}>
-                    <Link to={"/books/" + book._id}>
-                      <strong>
-                        {book.title} by {book.author}
-                      </strong>
-                    </Link>
-                    <DeleteBtn onClick={() => deleteBook(book._id)} />
+                {books.map((book, key) => (
+                  <ListItem key={key}
+                        title = {book.title} 
+                        authors = {book.authors}
+                        description = {book.description}
+                        link = {book.link} >
+                    <SaveBtn onClick={() => saveBook(book)} />
                   </ListItem>
                 ))}
               </List>

@@ -11,6 +11,16 @@ export function List({ children }) {
   );
 }
 
-export function ListItem({ children }) {
-  return <li className="list-group-item">{children}</li>;
+export function ListItem(props, { children }) {
+  return (
+    <div className="card">
+      {props.title}
+      {props.description}
+      {props.authors}
+      {props.link}
+      {children}
+    </div>
+  ) 
 }
+
+// Add <a> tag to link
